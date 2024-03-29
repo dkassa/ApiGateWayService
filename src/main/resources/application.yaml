@@ -1,0 +1,47 @@
+
+#eureka:
+#  client:
+#    register-with-eureka: true
+#    fetchRegistry: true
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+
+server:
+  port: 9191
+
+
+
+
+
+
+
+
+ 
+        
+spring:
+  cloud:
+    config:
+      enabled: false
+    
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: setstatus_route
+        uri: http://localhost:8085/api/v1/employee
+        predicates:
+           - Host=/api/v1/employee/**
+      - id: setstatusshortcut_route
+        uri: http://localhost:8086
+        predicates:
+          - Host=/api/v1/employee/**
+   
+  config:
+    import: optional:ConfigServer:http://localhost:8181
+  application:
+    name: apiGateway
+    
+    
+    
+   
